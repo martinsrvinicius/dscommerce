@@ -6,15 +6,24 @@ import ProductDetailsCard from "../../../components/ProductDetailsCard";
 import { useParams } from 'react-router-dom';
 import * as productService from '../../../services/product-service';
 import { Link } from 'react-router-dom';
-
-
+import { ProductDTO } from '../../../models/product';
+import { useEffect, useState } from 'react';
 
 
 export default function ProductDetails() {
 
   const params = useParams();
 
-  const product = productService.findById(Number(params.productId));
+  const [product, setProduct] = useState<ProductDTO>();
+
+  useEffect(() => {
+    productService.findById(Number(params.productId))
+      .then(response => {
+        console.log(response);
+        const prod = response.data
+        setProduct(prod);
+      })
+  }, [])
 
   return (
     <main>
@@ -26,7 +35,7 @@ export default function ProductDetails() {
         <div className="dsc-btn-page-container">
           <ButtonPrimary text="Comprar" />
           <Link to="/">
-          <ButtonInverse text="Início" />
+            <ButtonInverse text="Início" />
           </Link>
         </div>
       </section>
