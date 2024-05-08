@@ -1,27 +1,23 @@
 import './styles.css';
+import * as cartService from '../../../services/cart-service';
+import { useEffect, useState } from 'react';
+import { OrderDTO, OrderItemDTO } from '../../../models/order';
 
-const cart = {
-    items: [
-        {
-            "productId": 3,
-            "name": "Macbook Pro",
-            "price": 1250.0,
-            "quantity": 1,
-            "imgUrl": "https://raw.githubusercontent.com/devsuperior/dscatalog-resources/master/backend/img/3-big.jpg",
-            "subTotal": 1250.0
-        },
-        {
-            "productId": 1,
-            "name": "The Lord of the Rings",
-            "price": 90.5,
-            "quantity": 2,
-            "imgUrl": "https://raw.githubusercontent.com/devsuperior/dscatalog-resources/master/backend/img/1-big.jpg",
-            "subTotal": 181.0
-        }
-    ]
-}
+
+const item1 : OrderItemDTO = new OrderItemDTO(
+    7,1,"PC Gamer", 1250.0, "https://raw.githubusercontent.com/devsuperior/dscatalog-resources/master/backend/img/3-big.jpg"
+);
+
+const item2 : OrderItemDTO = new OrderItemDTO(
+    9,1,"Macbook Pro", 181.0, "https://raw.githubusercontent.com/devsuperior/dscatalog-resources/master/backend/img/1-big.jpg"
+);
+
+
 
 export default function Cart() {
+
+    const [cart, setCart] = useState<OrderDTO>(cartService.getCart());
+
     return (
         <main>
             <section id="cart-container-section" className="dsc-container">
